@@ -5,11 +5,10 @@
 
 	<title>ASCII Game of Life</title>
 	<link rel="stylesheet" href="gol.css" type="text/css" media="screen" charset="utf-8">
-	
 </head>
 <body>
   <div id="gol-container">
-    <code>
+    <pre>
       <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
       <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
       <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
@@ -41,10 +40,66 @@
       <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
       <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
       <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-    </code>	
+    </pre>	
   </div>
 	<script type="text/javascript" charset="utf-8">
-		
+	  // Global constants
+	  // Grid width and height
+	  var numX = 40;
+	  var numY = 30;
+
+	  var gridPrev = gridNext = generateZeroed2dArray(numX, numY);
+	  randomizeGrid(gridPrev);
+	  displayGrid(gridPrev);
+
+
+
+	  // Useful functions
+	  function generateZeroed2dArray(x, y) {
+	    var arr = []
+
+	    for (var i = 0; i < y; i++) {
+	      var arrTemp = [];
+	      for (var j = 0; j < x; j++) {
+		arrTemp.push(0);
+	      }
+	      arr.push(arrTemp);
+	    }
+
+	    return arr;
+	  }
+
+	  function randomizeGrid(grid) {
+	    for (var i = 0; i < numY; i++) {
+	      for (var j = 0; j < numX; j++) {
+		var rand = Math.random();
+		if (rand < 0.5)
+		  grid[i][j] = 0;
+		if (rand > 0.5)
+		  grid[i][j] = 1;
+	      }
+	    }
+	  }
+
+	  function displayGrid(grid) {
+	    var container = document.getElementById("gol-container");
+	    var htmlString = "<pre>";
+
+	    for (var i = 0; i < numY; i++) {
+	      htmlString += "<p>";
+	      for (var j = 0; j < numX; j++) {
+		if (grid[i][j] == 0)
+		  htmlString += "O ";
+		if (grid[i][j] == 1)
+		  htmlString += "█ ";
+	      }
+	      htmlString += "</p>";
+	    }
+	    htmlString += "</pre>";
+	    container.innerHTML = htmlString;
+	  }
+
+        
 	</script>
 </body>
 </html>
