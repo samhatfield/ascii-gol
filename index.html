@@ -8,39 +8,6 @@
 </head>
 <body>
   <div id="gol-container">
-    <pre>
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-      <p>O O O O O O O O O O O O O O O O O O O O O O O O O O O O O O</p> 
-    </pre>	
   </div>
 	<script type="text/javascript" charset="utf-8">
 	  // Global constants
@@ -49,10 +16,13 @@
 	  var numY = 30;
 
 	  var gridPrev = gridNext = generateZeroed2dArray(numX, numY);
-	  randomizeGrid(gridPrev);
-	  displayGrid(gridPrev);
 
 
+	  var timer = setInterval(function() { go(); }, 50);
+	  function go() {
+	    randomizeGrid(gridPrev);
+	    displayGrid(gridPrev);
+	  }
 
 	  // Useful functions
 	  function generateZeroed2dArray(x, y) {
@@ -89,9 +59,9 @@
 	      htmlString += "<p>";
 	      for (var j = 0; j < numX; j++) {
 		if (grid[i][j] == 0)
-		  htmlString += "O ";
+		  htmlString += "  ";
 		if (grid[i][j] == 1)
-		  htmlString += "█ ";
+		  htmlString += "• ";
 	      }
 	      htmlString += "</p>";
 	    }
