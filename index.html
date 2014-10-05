@@ -12,16 +12,20 @@
 	<script type="text/javascript" charset="utf-8">
 	  // Global constants
 	  // Grid width and height
-	  var numX = 40;
-	  var numY = 30;
+	  var numX = 100;
+	  var numY = 100;
 
-	  var gridPrev = gridNext = generateZeroed2dArray(numX, numY);
+	  var gridPrev = generateZeroed2dArray(numX, numY);
+	  var gridNext = generateZeroed2dArray(numX, numY);
+	  randomizeGrid(gridPrev);
 
-
-	  var timer = setInterval(function() { go(); }, 50);
+	  var timer = setInterval(function() { go(); }, 20);
 	  function go() {
-	    randomizeGrid(gridPrev);
-	    displayGrid(gridPrev);
+	    evolve(gridNext, gridPrev);
+	    displayGrid(gridNext);
+
+	    for (var i = 0; i < gridNext.length; i++)
+	      gridPrev[i] = gridNext[i].slice(0);
 	  }
 
 	  // Useful functions
@@ -44,9 +48,9 @@
 	      for (var j = 0; j < numX; j++) {
 		var rand = Math.random();
 		if (rand < 0.5)
-		  grid[i][j] = 0;
-		if (rand > 0.5)
 		  grid[i][j] = 1;
+		else
+		  grid[i][j] = 0;
 	      }
 	    }
 	  }
@@ -61,7 +65,7 @@
 		if (grid[i][j] == 0)
 		  htmlString += "  ";
 		if (grid[i][j] == 1)
-		  htmlString += "• ";
+		  htmlString += "0 ";
 	      }
 	      htmlString += "</p>";
 	    }
@@ -69,7 +73,26 @@
 	    container.innerHTML = htmlString;
 	  }
 
-        
+          function evolve(gridNext, gridPrev) {
+	    for (var i = 1; i < numY-1; i++) {
+	      for (var j = 1; j < numX-1; j++) {
+		var neighbours = 0;
+
+		for (var x = -1; x <= 1; x++) {
+		  for (var y = -1; y <= 1; y++) {
+		    neighbours += gridPrev[i+x][j+y];
+		   }
+		}
+
+		neighbours -= gridPrev[i][j];
+
+		if      ((gridPrev[i][j] == 1) && (neighbours <  2)) gridNext[i][j] = 0;
+		else if ((gridPrev[i][j] == 1) && (neighbours >  3)) gridNext[i][j] = 0;
+		else if ((gridPrev[i][j] == 0) && (neighbours == 3)) gridNext[i][j] = 1;
+		else    gridNext[i][j] = gridPrev[i][j];
+	      }
+	    }
+	  }
 	</script>
 </body>
 </html>
